@@ -21,7 +21,7 @@ def deps do
 end
 ```
 
-## Useage
+## How to use
 
 ```iex> GitHubParse.markdown_to_pdf "https://github.com/CyC2018/CS-Notes/blob/master/README.md"```
 
