@@ -32,7 +32,8 @@ defmodule Git2pdf.MixProject do
     [
       {:pdf_generator, ">=0.4.0" },
       {:floki, "~> 0.20.0"},
-      {:httpoison, "~> 1.4"}
+      {:httpoison, "~> 1.4"},
+      {:ex_doc, ">= 0.0.0", only: :dev}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
     ]
@@ -43,8 +44,7 @@ defmodule Git2pdf.MixProject do
       # This option is only needed when you don't want to use the OTP application name
       name: "git2pdf",
       # These are the default files included in the package
-      files: ~w(lib priv .formatter.exs mix.exs README* readme* LICENSE*
-                license* CHANGELOG* changelog* src),
+      files: ~w(lib config .formatter.exs mix.exs README* LICENSE*),
       licenses: ["MIT License"],
       links: %{"GitHub" => "https://github.com/madawei2699/git2pdf"}
     ]
