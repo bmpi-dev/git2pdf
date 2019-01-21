@@ -89,7 +89,7 @@ defmodule GitHubParse do
   defp check_url_status(url) do
     if (String.starts_with?(url, "http")) do
       IO.puts("check_url_status: url is #{url}")
-      Process.sleep(Enum.random(2..6) * 1000)
+      Process.sleep(500)
       r = HTTPoison.head url
       case r do
         {:ok, %HTTPoison.Response{status_code: 200, body: _}} -> url
