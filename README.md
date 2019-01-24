@@ -1,4 +1,4 @@
-# Git2pdf
+# Git2PDF
 
 ## Description
 
@@ -10,7 +10,7 @@ Parse a markdown file which has a lot of url links can lead a very long time to 
 
 ## Installation
 
-before you can use this lib, it need install **wkhtmltopdf** to parse html to pdf, install guid can found its [website](https://wkhtmltopdf.org/)
+before you can use this lib, it need install **wkhtmltopdf** to parse html to pdf, install guid can found its [website](https://wkhtmltopdf.org/).
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 by adding `git2pdf` to your list of dependencies in `mix.exs`:
@@ -18,18 +18,18 @@ by adding `git2pdf` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:git2pdf, "~> 0.1.0"}
+    {:git2pdf, "~> 0.2.0"}
   ]
 end
 ```
 
 ## How to use
 
-### InPut
+### Input
 
 ```iex> GitHubParse.markdown_to_pdf "https://github.com/madawei2699/git2pdf/blob/master/README.md", 2, false```
 
-### OutPut
+### Output
 
 ```{"/var/folders/k7/w1zkb4cn0472dk8t_j699pyc0000gn/T/KXiE8hJZ.html", "/var/folders/k7/w1zkb4cn0472dk8t_j699pyc0000gn/T/KXiE8hJZ.pdf"}```
 
