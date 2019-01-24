@@ -44,7 +44,7 @@ defmodule Git2pdf.MixProject do
       # This option is only needed when you don't want to use the OTP application name
       name: "git2pdf",
       # These are the default files included in the package
-      files: ~w(lib config .formatter.exs mix.exs README* LICENSE*),
+      files: ~w(lib config .formatter.exs mix.exs README* LICENSE* CHANGELOG*),
       licenses: ["MIT License"],
       links: %{"GitHub" => "https://github.com/madawei2699/git2pdf"}
     ]
