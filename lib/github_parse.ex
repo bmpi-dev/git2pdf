@@ -51,7 +51,7 @@ defmodule GitHubParse do
       else
         walk_html(readme, is_check_url)
       end
-    new_url_list = Floki.find(normal_html, "a") |> Floki.attribute("href") |> Enum.filter(fn x -> String.contains?(x, ".md") and not String.contains?(x, ".md#") end)
+    new_url_list = get_url_list(normal_html)
     IO.puts("new url list is #{new_url_list}")
     child_htmls = new_url_list
       |> Stream.filter(fn x -> not Enum.member?(url_list, x) end)
@@ -62,6 +62,13 @@ defmodule GitHubParse do
 
   defp url_to_html(_, _, deep_level, _, _) when deep_level == 0 do
     []
+  end
+
+  defp get_url_list(html) do
+    Floki.find(html, "a")
+      |> Floki.attribute("href")
+      |> Enum.filter(fn x -> String.contains?(x, ".md") and not String.contains?(x, ".md#") end)
+      |> Enum.uniq
   end
 
   defp flatten_list(list) do
