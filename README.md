@@ -25,7 +25,12 @@ end
 
 ## How to use
 
+### InPut
+
 ```iex> GitHubParse.markdown_to_pdf "https://github.com/madawei2699/git2pdf/blob/master/README.md", 2, false```
+
+### OutPut
+
 ```{"/var/folders/k7/w1zkb4cn0472dk8t_j699pyc0000gn/T/KXiE8hJZ.html", "/var/folders/k7/w1zkb4cn0472dk8t_j699pyc0000gn/T/KXiE8hJZ.pdf"}```
 
 The first is url, sencond is deep_level which mean how deepth which you want it get, the last is whether it check every url in markdown, mostly it doesn't need to check and you don't want to wait too long time.
