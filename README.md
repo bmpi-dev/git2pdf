@@ -18,7 +18,7 @@ by adding `git2pdf` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:git2pdf, "~> 0.2.0"}
+    {:git2pdf, "~> 0.3.0"}
   ]
 end
 ```
