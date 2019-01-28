@@ -7,16 +7,12 @@ defmodule GitHubParse do
   @doc """
   ## Example
     iex> GitHubParse.markdown_to_pdf "https://github.com/remoteintech/remote-jobs/blob/master/README.md", 2, false
-    url is https://github.com/CyC2018/CS-Notes/blob/master/README.md
-    check_url_status: url is https://xiaozhuanlan.com/CyC2018
-    check_url_status: url is https://github.com/CyC2018/CS-Notes/blob/master/other/LogoMakr_0zpEzN.png
-    check_url_status: url is https://github.com/CyC2018/CS-Notes/raw/master/other/LogoMakr_0zpEzN.png
-    check_url_status: url is https://cyc2018.github.io/CS-Notes
+    iex> GitHubParse.markdown_to_pdf "https://github.com/remoteintech/remote-jobs/blob/master/README.md", 2, false, ["--encoding", "utf-8", "-d", "300", "--zoom", "1.5", "--user-style-sheet", "/path/to/your/custom.css"]
 
   """
-  def markdown_to_pdf(url, deep_level, is_check_url) do
+  def markdown_to_pdf(url, deep_level, is_check_url, wkhtmltopdf_options \\ ["--encoding", "utf-8"]) do
     readme_html = url_to_html(url, false, deep_level, is_check_url)
-    pdf_file_path = PdfGenerator.generate! readme_html, shell_params: ["--encoding", "utf-8"]
+    pdf_file_path = PdfGenerator.generate! readme_html, shell_params: wkhtmltopdf_options
     html_file_path = Enum.at(String.split(pdf_file_path, "."), 0) <> ".html"
     File.write!(html_file_path, readme_html)
     {html_file_path, pdf_file_path}
@@ -36,7 +32,7 @@ defmodule GitHubParse do
   defp url_to_html(url, is_readme, deep_level, is_check_url, url_list) when deep_level > 0 do
     IO.puts("url is #{url}")
     # must include else clause or it will nil
-    url_list = if length(url_list) == 0 do List.insert_at(url_list, 0, url) else url_list end
+    url_list = if url_list == [] do List.insert_at(url_list, 0, url) else url_list end
     Process.sleep(Enum.random(1..2) * 500)
     body = get_html_body(url)
     readme =
@@ -51,7 +47,7 @@ defmodule GitHubParse do
       else
         walk_html(readme, is_check_url)
       end
-    new_url_list = get_url_list(normal_html)
+    new_url_list = get_url_list(Floki.find(normal_html, "a"))
     IO.puts("new url list is #{new_url_list}")
     child_htmls = new_url_list
       |> Stream.filter(fn x -> not Enum.member?(url_list, x) end)
@@ -65,7 +61,7 @@ defmodule GitHubParse do
   end
 
   defp get_url_list(html) do
-    Floki.find(html, "a")
+    html
       |> Floki.attribute("href")
       |> Enum.filter(fn x -> String.contains?(x, ".md") and not String.contains?(x, ".md#") end)
       |> Enum.uniq
@@ -111,7 +107,7 @@ defmodule GitHubParse do
   end
 
   defp check_url_status(url, is_check_url) when is_check_url == true do
-    if (String.starts_with?(url, "http")) do
+    if String.starts_with?(url, "http") do
       IO.puts("check_url_status: url is #{url}")
       Process.sleep(500)
       r = HTTPoison.head url
