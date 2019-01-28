@@ -28,8 +28,8 @@ end
 ### Input
 
 ```iex> GitHubParse.markdown_to_pdf "https://github.com/remoteintech/remote-jobs/blob/master/README.md", 2, false```
-```iex> GitHubParse.markdown_to_pdf "https://github.com/remoteintech/remote-jobs/blob/master/README.md", 2, false, ["--encoding", "utf-8", "-d", "300", "--zoom", "1.5", "--user-style-sheet", "/path/to/your/custom.css"]
-   git2pdf use wkhtmltopdf to generate pdf, the last param is wkhtmltopdf's params, your can find more in this [link](https://wkhtmltopdf.org/usage/wkhtmltopdf.txt)```
+```iex> GitHubParse.markdown_to_pdf "https://github.com/remoteintech/remote-jobs/blob/master/README.md", 2, false, ["--encoding", "utf-8", "-d", "300", "--zoom", "1.5", "--user-style-sheet", "/path/to/your/custom.css"]```
+```git2pdf use wkhtmltopdf to generate pdf, the last param is wkhtmltopdf's params, your can find more in this [link](https://wkhtmltopdf.org/usage/wkhtmltopdf.txt)```
 
 ### Output
 
