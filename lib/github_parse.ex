@@ -5,6 +5,43 @@ defmodule GitHubParse do
   """
 
   @doc """
+  ## This function get url list from file to generate multi pdf files.
+  ## One url one line in file.
+  """
+  def get_urls_to_files(file_path) do
+    pdf_files = File.stream!(file_path)
+    |> Stream.map(&String.trim/1)
+    |> Stream.with_index
+    |> Stream.map(fn ({line, _index}) -> url_to_html(line, false, 1, false) end)
+    |> Stream.map(fn (html) -> 
+      pdf_file_path = PdfGenerator.generate!(html, shell_params: ["--encoding", "utf-8"])
+      html_file_path = Enum.at(String.split(pdf_file_path, "."), 0) <> ".html"
+      File.write!(html_file_path, html)
+      :timer.sleep(5000)
+      {html_file_path, pdf_file_path}
+    end)
+    |> Enum.to_list
+    pdf_files
+  end
+
+  @doc """
+  ## This function get url list from file to generate one pdf file.
+  ## One url one line in file.
+  """
+  def get_urls_to_file(file_path) do
+    html = File.stream!(file_path)
+    |> Stream.map(&String.trim/1)
+    |> Stream.with_index
+    |> Stream.map(fn ({line, _index}) -> url_to_html(line, false, 1, true) end)
+    |> Enum.to_list
+    |> Enum.join
+    pdf_file_path = PdfGenerator.generate! html, shell_params: ["--encoding", "utf-8"]
+    html_file_path = Enum.at(String.split(pdf_file_path, "."), 0) <> ".html"
+    File.write!(html_file_path, html)
+    {html_file_path, pdf_file_path}
+  end
+
+  @doc """
   ## Example
     iex> GitHubParse.markdown_to_pdf "https://github.com/remoteintech/remote-jobs/blob/master/README.md", 2, false
     iex> GitHubParse.markdown_to_pdf "https://github.com/remoteintech/remote-jobs/blob/master/README.md", 2, false, ["--encoding", "utf-8", "-d", "300", "--zoom", "1.5", "--user-style-sheet", "/path/to/your/custom.css"]
